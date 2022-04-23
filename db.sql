@@ -286,5 +286,3 @@ Drop Table book;
 
 -- Dropping table AUTHOR
 Drop Table author;
-
-
