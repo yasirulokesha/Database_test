@@ -236,41 +236,55 @@ FROM worksession
 ORDER by authid,WorkYear,WorkWeek;
 
 -- Query 2
-SELECT author.id,workyear,workweek,workhours
-FROM work
-INNER JOIN worksession
-ON worksession.id=work.id
-ORDER BY 
+
+SELECT authid,WorkYear, SUM(worksession.WorkHours) as "TotalHours"
+FROM worksession
+GROUP BY (authid,WorkYear)
+ORDER BY authid DESC;
 
 -- Query 3
-SELECT author.id,workyear,totalhours
-FROM author
+
+SELECT * FROM worksession;
 
 -- Query 4
-SELECT * FROM books;
-SELECT SUM
 
-SELECT b.bid,a.authid,w.WorkYear,SUM(w.WorkHours)as "Total Hours" from WorkSession w 
-INNER JOIN  book b 
-ON w.bid = t.bid
-INNER JOIN  author  
-ON w.authid = a.authid
-GROUP BY b.bid, a.authid, w.WorkYear
-ORDER BY  bid, authid, WorkYear;
+SELECT bid,authid,WorkYear,SUM(WorkHours) AS "Totalhours"
+FROM worksession
+GROUP BY (bid,authid,WorkYear)
+ORDER BY bid;
+
 
 -- Query 5
-SELECT t.bid,a.authid,w.WorkYear,SUM(w.WorkHours*al.payrate)as "Total Hours" from WorkSession w 
-INNER JOIN book b on w.bid = b.bid
-INNER JOIN author a on w.authid = a.authid
-INNER JOIN allocation al on w.authid = al.authid
-GROUP BY b.bid, a.authid, w.WorkYear
-ORDER BY bid, authid, WorkYear;
+
+SELECT allocation.bid,worksession.authid,REPLACE(WorkYear,'2020','2012') AS "workyear" ,SUM(WorkHours)*(allocation.payrate) AS "Total Pays"
+FROM worksession
+INNER JOIN allocation
+ON worksession.authid = allocation.authid
+GROUP BY (worksession.bid,worksession.authid,worksession.WorkYear)
+ORDER BY bid;
+
+
+select b.bid,a.authid,w.WorkYear,SUM(w.WorkHours*al.payrate)as "Total Hours" from WorkSession w 
+inner join book b on w.bid = b.bid
+inner join author a on w.authid = a.authid
+inner join allocation al on w.authid = al.authid
+group by b.bid, a.authid, w.WorkYear
+order by bid, authid, WorkYear;
+
+
 
 -- TASK 3
 
--- DROPPING TABLES WROKSESSION,ALLOCATION,AUTHOR
+-- Dropping table WORKSESSION
+Drop Table worksession;
 
-DROP TABLE worksession;
-DROP TABLE allocation;
-DROP TABLE author;
-DROP TABLE book;
+-- Dropping table ALLOCATION
+Drop Table allocation;
+
+-- Dropping table BOOK
+Drop Table book;
+
+-- Dropping table AUTHOR
+Drop Table author;
+
+
