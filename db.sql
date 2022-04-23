@@ -230,8 +230,10 @@ INSERT INTO worksession VALUES (108,40,2020,7,120);
 -- 2D
 
 -- Query 1
-SELECT * from worksession
-ORDER by tid,authid;
+
+SELECT authid,WorkYear,WorkWeek,WorkHours 
+FROM worksession
+ORDER by authid,WorkYear,WorkWeek;
 
 -- Query 2
 SELECT author.id,workyear,workweek,workhours
