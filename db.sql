@@ -281,6 +281,12 @@ inner join allocation al on w.authid = al.authid
 group by b.bid, a.authid, w.WorkYear
 order by bid, authid, WorkYear;
 
+SELECT SUM(WorkHours)*allocation.payrate
+FROM worksession
+INNER JOIN allocation
+ON worksession.authid = allocation.authid
+GROUP BY worksession.bid;
+
 
 -- TASK 3
 
