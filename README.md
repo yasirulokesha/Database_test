@@ -14,7 +14,7 @@
 
 https://github.com/yasirulokesha/Database_test/blob/main/db.sql
 
-<h5 style="background-color:rgb(255, 46, 71);">Errors Solved ! </h5>
+<h5>Errors Solved ! </h5>
 <h3>
 Sem 1 | Dip in IT | 2022
 </h3>
