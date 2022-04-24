@@ -1,18 +1,20 @@
- /* DATABASE ANALYSIS & DESIGN - ASSIGNMENT 1 ( Group ) */
-
+/* 
+    DATABASE ANALYSIS & DESIGN 
+    ASSIGNMENT 1 ( Group ) 
+*/
 
 --Task 1
 
 --1A
 
 /*
-104067180  Yohani Uthpala
-104060309  Yasiru  Lokesha
-104053891  Sithum Nimlaka
-104048389  Inuka Herath
-104048664  Chamodi Perera
-104060202  Shihara Fernando
-104048651  Naveen Nisal
+    104067180  Yohani Uthpala
+    104060309  Yasiru  Lokesha
+    104053891  Sithum Nimlaka
+    104048389  Inuka Herath
+    104048664  Chamodi Perera
+    104060202  Shihara Fernando
+    104048651  Naveen Nisal
 */
 
 -- 1B
@@ -25,7 +27,6 @@ title varchar2(30) NOT NULL,
 sellingprice number(6,2) CHECK (sellingprice>=0),
 PRIMARY KEY (bid)
 );
-
 
 -- Author Table
 
@@ -53,6 +54,7 @@ CONSTRAINT CHK_Pay check(payrate>=1 AND payrate <=79.99)
 -- 1C 
 
 -- Author Data
+
 INSERT INTO author VALUES (40,  'Abott', 'Tony');
 INSERT INTO author VALUES  ( 42,  'Bishop', 'Bronwyn');
 INSERT INTO author VALUES ( 44,  'Fischer', 'Tim');
@@ -62,6 +64,7 @@ INSERT INTO author VALUES ( 48,  'Zhao', 'Cheng');
 INSERT INTO author VALUES ( 50,  'Phan', 'Annie');
  
 -- Book Data 
+
 INSERT INTO book VALUES ( 101, 'Knitting with Dog Hair', 6.99);
 INSERT INTO book VALUES ( 105, 'Avoiding Large Ships', 11);
 INSERT INTO book VALUES ( 107, 'Dealing with stuff', 6.5);
@@ -70,6 +73,7 @@ INSERT INTO book VALUES ( 109, 'Guide to hands free texting', 10.5);
 INSERT INTO book VALUES ( 113, 'You call that a lecture?', 17.5); 
 
 -- Allocation Data
+
 INSERT INTO allocation VALUES (101,42,25);
 INSERT INTO allocation VALUES (101,45,32);
 INSERT INTO allocation VALUES (108,47,35);
@@ -81,8 +85,10 @@ INSERT INTO allocation VALUES (105,40,19);
 INSERT INTO allocation VALUES (107,42,35);
 INSERT INTO allocation VALUES (108,40,45);
 
+-- END OF INITALS --
 
--- 1d
+-- 1D
+
 -- Statement 1 
 -- INSERT INTO author (authid,sname, fname) VALUES (47,'Ziggle','Annie');
 
@@ -97,6 +103,7 @@ INSERT INTO allocation VALUES (108,40,45);
 
 
 -- 1E
+
 -- Query 1
 
 SELECT * from allocation 
@@ -130,7 +137,7 @@ FROM book;
 SELECT * FROM book
 Where sellingprice < 10.58;
 
--- Query 6                                                                                
+-- Query 6  
 
 SELECT allocation.bid, COUNT(allocation.bid) as "COUNT(*)"
 FROM allocation
@@ -138,6 +145,7 @@ GROUP by bid
 ORDER BY COUNT(allocation.bid),allocation.bid;
 
 -- Query 7
+
 SELECT allocation.bid, book.title,COUNT(allocation.bid) as "COUNT(*)"
 FROM allocation
 INNER JOIN book
@@ -147,13 +155,15 @@ ORDER BY COUNT(allocation.bid),allocation.bid;
 
 -- Query 8
 
-SELECT allocation.bid,book.title, COUNT (allocation.bid)
-FROM    allocation
-INNER JOIN
-ON
+SELECT allocation.bid as "BID",book.title AS "TITLE",COUNT(allocation.bid) AS "COUNT"
+FROM allocation
+INNER JOIN book 
+ON book.bid=allocation.bid
+HAVING COUNT(allocation.bid)>1
+GROUP BY ALLOCATION.bid,BOOK.title
+ORDER BY COUNT;
 
--- Query 9[
-
+-- Query 9
 SELECT author.authid,author.sname,author.fname,allocation.bid
 FROM author
 INNER JOIN allocation
@@ -178,12 +188,12 @@ LEFT JOIN book
 ON book.bid=allocation.bid
 ORDER BY author.authid,allocation.bid;
 
-
 -- TASK 2
 
 -- 2A
 
 -- Creating the worksession table
+
 CREATE TABLE  worksession(
 bid number(4),
 authid number(4),
@@ -199,6 +209,7 @@ constraint CHK_hours  CHECK (WorkHours>=0.5 AND WorkHours <=99.99)
 );
 
 -- 2B
+
 INSERT INTO worksession VALUES (101,42,2020,5,5);
 INSERT INTO worksession VALUES (101,42,2020,6,4);
 INSERT INTO worksession VALUES (101,42,2020,7,5);
@@ -263,14 +274,12 @@ ON worksession.authid = allocation.authid
 GROUP BY (worksession.bid,worksession.authid,worksession.WorkYear)
 ORDER BY bid;
 
-
 select b.bid,a.authid,w.WorkYear,SUM(w.WorkHours*al.payrate)as "Total Hours" from WorkSession w 
 inner join book b on w.bid = b.bid
 inner join author a on w.authid = a.authid
 inner join allocation al on w.authid = al.authid
 group by b.bid, a.authid, w.WorkYear
 order by bid, authid, WorkYear;
-
 
 
 -- TASK 3
