@@ -266,7 +266,12 @@ ORDER BY bid;
 
 -- Query 5
 
-Under Constructions
+SELECT worksession.bid,worksession.authid,worksession.WorkYear,SUM(WorkHours)*allocation.payrate AS "Total Pay"
+FROM worksession
+INNER JOIN allocation
+ON allocation.bid = worksession.bid
+GROUP BY worksession.bid,worksession.authid,worksession.WorkYear,allocation.payrate
+ORDER BY bid;
 
 -- TASK 3
 
@@ -281,33 +286,3 @@ Drop Table book;
 
 -- Dropping table AUTHOR
 Drop Table author;
-
-
--- Error
-
-SELECT worksession.bid,worksession.authid,worksession.WorkYear,SUM(WorkHours)*allocation.payrate AS "Total Pay"
-FROM worksession
-INNER JOIN allocation
-ON allocation.bid = worksession.bid
-GROUP BY worksession.bid,worksession.authid,worksession.WorkYear,allocation.payrate
-ORDER BY bid;
-
-SELECT allocation.bid,worksession.authid,REPLACE(WorkYear,'2020','2012') AS "workyear" ,SUM(WorkHours)*(allocation.payrate) AS "Total Pays"
-FROM worksession
-INNER JOIN allocation
-ON worksession.authid = allocation.authid
-GROUP BY (worksession.bid,worksession.authid,worksession.WorkYear)
-ORDER BY bid;
-
-select b.bid,a.authid,w.WorkYear,SUM(w.WorkHours*al.payrate)as "Total Hours" from WorkSession w 
-inner join book b on w.bid = b.bid
-inner join author a on w.authid = a.authid
-inner join allocation al on w.authid = al.authid
-group by b.bid, a.authid, w.WorkYear
-order by bid, authid, WorkYear;
-
-SELECT SUM(WorkHours)*allocation.payrate
-FROM worksession
-INNER JOIN allocation
-ON worksession.authid = allocation.authid
-GROUP BY worksession.bid;
