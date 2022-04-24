@@ -19,7 +19,7 @@
 
 -- 1B
 
--- Book Table
+-- book Table
 
 CREATE TABLE book(
 bid number(4),
@@ -38,14 +38,14 @@ PRIMARY KEY (authid),
 CONSTRAINT CHK_Name UNIQUE(sname, fname)
 );
 
--- Allocation Table
+-- allocation Table
 
 CREATE TABLE allocation(
 bid number(4),
 authid number(4),
 payrate number(6,2),
 PRIMARY KEY (bid,authid),
-FOREIGN KEY (bid) REFERENCES BOOK,
+FOREIGN KEY (bid) REFERENCES book,
 FOREIGN KEY (authid) REFERENCES AUTHOR,
 CONSTRAINT CHK_Pay check(payrate>=1 AND payrate <=79.99)
 );
@@ -55,15 +55,15 @@ CONSTRAINT CHK_Pay check(payrate>=1 AND payrate <=79.99)
 
 -- Author Data
 
-INSERT INTO author VALUES ( 40,  'Abott', 'Tony');
-INSERT INTO author VALUES ( 42,  'Bishop', 'Bronwyn');
+INSERT INTO author VALUES (40,  'Abott', 'Tony');
+INSERT INTO author VALUES  ( 42,  'Bishop', 'Bronwyn');
 INSERT INTO author VALUES ( 44,  'Fischer', 'Tim');
 INSERT INTO author VALUES ( 45,  'Grossman', 'Paul');
 INSERT INTO author VALUES ( 47,  'Ziggle', 'Annie');
 INSERT INTO author VALUES ( 48,  'Zhao', 'Cheng'); 
 INSERT INTO author VALUES ( 50,  'Phan', 'Annie');
  
--- Book Data 
+-- book Data 
 
 INSERT INTO book VALUES ( 101, 'Knitting with Dog Hair', 6.99);
 INSERT INTO book VALUES ( 105, 'Avoiding Large Ships', 11);
@@ -72,7 +72,7 @@ INSERT INTO book VALUES ( 108, 'Teach fish to sing', 10.99);
 INSERT INTO book VALUES ( 109, 'Guide to hands free texting', 10.5);
 INSERT INTO book VALUES ( 113, 'You call that a lecture?', 17.5); 
 
--- Allocation Data
+-- allocation Data
 
 INSERT INTO allocation VALUES (101,42,25);
 INSERT INTO allocation VALUES (101,45,32);
@@ -150,7 +150,7 @@ SELECT allocation.bid, book.title,COUNT(allocation.bid) as "COUNT(*)"
 FROM allocation
 INNER JOIN book
 ON book.bid = allocation.bid
-GROUP by allocation.bid
+GROUP by allocation.bid,book.title
 ORDER BY COUNT(allocation.bid),allocation.bid;
 
 -- Query 8
@@ -160,7 +160,7 @@ FROM allocation
 INNER JOIN book 
 ON book.bid=allocation.bid
 HAVING COUNT(allocation.bid)>1
-GROUP BY ALLOCATION.bid,BOOK.title
+GROUP BY allocation.bid,book.title
 ORDER BY COUNT;
 
 -- Query 9
@@ -293,11 +293,23 @@ GROUP BY worksession.bid;
 -- Dropping table WORKSESSION
 Drop Table worksession;
 
--- Dropping table ALLOCATION
+-- Dropping table allocation
 Drop Table allocation;
 
--- Dropping table BOOK
+-- Dropping table book
 Drop Table book;
 
 -- Dropping table AUTHOR
 Drop Table author;
+
+
+-- RANCY
+
+SELECT worksession.bid,worksession.authid,worksession.WorkYear,SUM(WorkHours)*allocation.payrate AS "Total Pay"
+FROM worksession
+INNER JOIN allocation
+ON allocation.bid = worksession.bid
+GROUP BY worksession.bid,worksession.authid,worksession.WorkYear,allocation.payrate
+
+ORDER BY bid;
+
