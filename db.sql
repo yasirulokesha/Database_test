@@ -55,8 +55,8 @@ CONSTRAINT CHK_Pay check(payrate>=1 AND payrate <=79.99)
 
 -- Author Data
 
-INSERT INTO author VALUES (40,  'Abott', 'Tony');
-INSERT INTO author VALUES  ( 42,  'Bishop', 'Bronwyn');
+INSERT INTO author VALUES ( 40,  'Abott', 'Tony');
+INSERT INTO author VALUES ( 42,  'Bishop', 'Bronwyn');
 INSERT INTO author VALUES ( 44,  'Fischer', 'Tim');
 INSERT INTO author VALUES ( 45,  'Grossman', 'Paul');
 INSERT INTO author VALUES ( 47,  'Ziggle', 'Annie');
