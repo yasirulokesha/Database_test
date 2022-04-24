@@ -139,10 +139,10 @@ Where sellingprice < 10.58;
 
 -- Query 6  
 
-SELECT allocation.bid, COUNT(allocation.bid) as "COUNT(*)"
+SELECT bid, COUNT(bid) as "COUNT(*)"
 FROM allocation
 GROUP by bid
-ORDER BY COUNT(allocation.bid),allocation.bid;
+ORDER BY COUNT(bid),allocation.bid;
 
 -- Query 7
 
@@ -264,8 +264,33 @@ FROM worksession
 GROUP BY (bid,authid,WorkYear)
 ORDER BY bid;
 
-
 -- Query 5
+
+Under Constructions
+
+-- TASK 3
+
+-- Dropping table WORKSESSION
+Drop Table worksession;
+
+-- Dropping table allocation
+Drop Table allocation;
+
+-- Dropping table book
+Drop Table book;
+
+-- Dropping table AUTHOR
+Drop Table author;
+
+
+-- Error
+
+SELECT worksession.bid,worksession.authid,worksession.WorkYear,SUM(WorkHours)*allocation.payrate AS "Total Pay"
+FROM worksession
+INNER JOIN allocation
+ON allocation.bid = worksession.bid
+GROUP BY worksession.bid,worksession.authid,worksession.WorkYear,allocation.payrate
+ORDER BY bid;
 
 SELECT allocation.bid,worksession.authid,REPLACE(WorkYear,'2020','2012') AS "workyear" ,SUM(WorkHours)*(allocation.payrate) AS "Total Pays"
 FROM worksession
@@ -286,30 +311,3 @@ FROM worksession
 INNER JOIN allocation
 ON worksession.authid = allocation.authid
 GROUP BY worksession.bid;
-
-
--- TASK 3
-
--- Dropping table WORKSESSION
-Drop Table worksession;
-
--- Dropping table allocation
-Drop Table allocation;
-
--- Dropping table book
-Drop Table book;
-
--- Dropping table AUTHOR
-Drop Table author;
-
-
--- RANCY
-
-SELECT worksession.bid,worksession.authid,worksession.WorkYear,SUM(WorkHours)*allocation.payrate AS "Total Pay"
-FROM worksession
-INNER JOIN allocation
-ON allocation.bid = worksession.bid
-GROUP BY worksession.bid,worksession.authid,worksession.WorkYear,allocation.payrate
-
-ORDER BY bid;
-
