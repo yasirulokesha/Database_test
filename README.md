@@ -10,10 +10,6 @@
 104060202  Shihara Fernando<br>
 104048651  Naveen Nisal<br>
 
-<h2>Web</h2>
-
-https://github.com/yasirulokesha/Database_test/blob/main/db.sql
-
 <h5>Errors Solved ! </h5>
 <h3>
 Sem 1 | Dip in IT | 2022
