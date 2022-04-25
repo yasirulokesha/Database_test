@@ -2,13 +2,13 @@
 
 <h2>Database Analysing and Design</h2>
 
-104067180  Yohani Uthpala
-104060309  Yasiru  Lokesha
-104053891  Sithum Nimlaka
-104048389  Inuka Herath
-104048664  Chamodi Perera
-104060202  Shihara Fernando
-104048651  Naveen Nisal
+104067180  Yohani Uthpala<br>
+104060309  Yasiru  Lokesha<br>
+104053891  Sithum Nimlaka<br>
+104048389  Inuka Herath<br>
+104048664  Chamodi Perera<br>
+104060202  Shihara Fernando<br>
+104048651  Naveen Nisal<br>
 
 <h2>Web</h2>
 
